@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Company and Employee API
+  description: API for retrieving companies and their employees.
+  version: '1.0.0'
+servers:
+  - url: http://localhost:4000
+
+paths:
+  /companies:
+    get:
+      summary: List all companies
+      description: Returns a list of companies
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Limit the number of companies returned. Default is 10.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: Number of companies to skip before starting to collect the result set. Default is 0.
+      responses:
+        '200':
+          description: A JSON array of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+  /companies/{id}:
+    get:
+      summary: Get a specific company by ID
+      description: Returns a single company details by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the company
+      responses:
+        '200':
+          description: Company details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+  /employees:
+    get:
+      summary: List all employees
+      description: Returns a list of employees
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Limit the number of employees returned. Default is 10.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: Number of employees to skip before starting to collect the result set. Default is 0.
+      responses:
+        '200':
+          description: A JSON array of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+
+  /employees/{id}:
+    get:
+      summary: Get a specific employee by ID
+      description: Returns a single employee details by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the employee
+      responses:
+        '200':
+          description: Employee details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+components:
+  schemas:
+    Company:
+      $ref: './schemas/companies.json'
+    Employee:
+      $ref: './schemas/employees.json'
